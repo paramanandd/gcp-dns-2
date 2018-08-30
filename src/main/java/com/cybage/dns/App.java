@@ -52,16 +52,22 @@ while (recordSetIterator.hasNext()) {
 }*/
 //    Dns dns;
   //  Zone zone=null;
-     Iterator<Zone> zoneIterator = Dns.listZones().iterateAll().iterator();
+    
+    Dns  dns = DnsOptions.getDefaultInstance().getService();
+    Iterator<Zone> zoneIterator = dns.listZones().iterateAll().iterator();
       if (zoneIterator.hasNext()) {
         System.out.println("The project contains the following zones:");
         while (zoneIterator.hasNext()) {
          // printZone(zoneIterator.next());
 //	  System.out.printf("%nName: %s%n", zone.getName();
          System.out.printf("%nName: %s%n", zoneIterator.next().getName());
+	//Iterator<RecordSet> recordSetIterator = zoneIterator.next().listRecordSets().iterateAll();
+	//while (recordSetIterator.hasNext()) {
+	 // System.out.println(recordSetIterator.next());
+//	}
 	}
       } else {
         System.out.println("Project contains no zones.");
       }
-    }
+}
 }
