@@ -79,16 +79,16 @@ public class App
 //	System.out.printf("name : ",zone.getName());
 //	} 
 	Zone zone =dns.getZone(zoneName);
-	/**
+	
 	System.out.printf("Record sets inside %s:", zone.getName());
-	Iterator<RecordSet> recordSetIterator = zone.listRecordSets().iterator();
+	Iterator<RecordSet> recordSetIterator = zone.listRecordSets().iterateAll().iterator();
 	System.out.println(String.format("Record sets inside %s:", zone.getName()));
 	while (recordSetIterator.hasNext()) {
 		System.out.println("inside");
-	  System.out.println(recordSetIterator.iterator().next());
-	}*/
-
-	String ip = "12.13.14.15";
+	  System.out.println(recordSetIterator.next());
+	}
+	
+	/**	String ip = "12.13.14.15";
 RecordSet toCreate = RecordSet.newBuilder("www." + zone.getDnsName(), RecordSet.Type.A)
     .setTtl(24, TimeUnit.HOURS)
     .addRecord(ip)
@@ -99,5 +99,5 @@ ChangeRequestInfo changeRequest = ChangeRequestInfo.newBuilder().add(toCreate).b
 
 // Build and apply the change request to our zone
 changeRequest = zone.applyChangeRequest(changeRequest);
-    }
+*/    }
 }
