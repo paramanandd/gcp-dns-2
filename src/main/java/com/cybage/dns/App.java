@@ -67,17 +67,15 @@ public class App
 	  System.out.println(nameServer);
 	}
 */
-/**	Iterator<Zone> zoneIterator = dns.listZones().iterateAll();
+	//list zones
+	Iterator<Zone> zoneIterator = dns.listZones().iterateAll().iterator();
 	int counter = 1;
 	while (zoneIterator.hasNext()) {
-		zonelist.add(zoneIterator.next());
 	      	System.out.printf("#%d.: %s%n%n", counter, zoneIterator.next());
 	  counter++;
-	} */
-	//List<Zone> zones=dns.listZones();
-//	for(Zone zone : zones){
-//	System.out.printf("name : ",zone.getName());
-//	} 
+	} 
+
+	//list record sets
 	Zone zone =dns.getZone(zoneName);
 	
 	System.out.printf("Record sets inside %s:", zone.getName());
