@@ -41,6 +41,11 @@ import com.google.api.services.dns.model.ResourceRecordSetsListResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+
+import com.google.cloud.dns.ChangeRequestInfo;
+import com.google.cloud.dns.RecordSet;
+
+import java.util.concurrent.TimeUnit;
 public class App 
 {
     public static void main( String[] args )
@@ -53,11 +58,11 @@ public class App
 	ZoneInfo zoneInfo = ZoneInfo.of(zoneName, domainName, description);
 //	List<Zone> zonelist;
 	//create zone
-/**	Zone zone = dns.create(zoneInfo);
-	System.out.printf("Zone was created and assigned ID %s.%n", zone.getGeneratedId());
+/**	Zone zone1 = dns.create(zoneInfo);
+	System.out.printf("Zone was created and assigned ID %s.%n", zone1.getGeneratedId());
 
 	//list name servers
-	List<String> nameServers = zone.getNameServers();
+	List<String> nameServers = zone1.getNameServers();
 	for (String nameServer : nameServers) {
 	  System.out.println(nameServer);
 	}
@@ -74,6 +79,25 @@ public class App
 //	System.out.printf("name : ",zone.getName());
 //	} 
 	Zone zone =dns.getZone(zoneName);
+	/**
 	System.out.printf("Record sets inside %s:", zone.getName());
+	Iterator<RecordSet> recordSetIterator = zone.listRecordSets().iterator();
+	System.out.println(String.format("Record sets inside %s:", zone.getName()));
+	while (recordSetIterator.hasNext()) {
+		System.out.println("inside");
+	  System.out.println(recordSetIterator.iterator().next());
+	}*/
+
+	String ip = "12.13.14.15";
+RecordSet toCreate = RecordSet.newBuilder("www." + zone.getDnsName(), RecordSet.Type.A)
+    .setTtl(24, TimeUnit.HOURS)
+    .addRecord(ip)
+    .build();
+
+// Make a change
+ChangeRequestInfo changeRequest = ChangeRequestInfo.newBuilder().add(toCreate).build();
+
+// Build and apply the change request to our zone
+changeRequest = zone.applyChangeRequest(changeRequest);
     }
 }
